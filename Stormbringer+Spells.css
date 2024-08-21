@@ -267,7 +267,7 @@ input.sheet-tab6 + span::before
 
 
 .sheet-spellLabel{
-	grid-column: 4 /span 2;
+	grid-column: 4  /span 2;
 	font-size:large;
 	text-align: center;
 }
