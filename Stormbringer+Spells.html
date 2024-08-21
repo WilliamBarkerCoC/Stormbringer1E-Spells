@@ -1591,6 +1591,22 @@
 		</div>
 	</rolltemplate>
 
+	<rolltemplate class="sheet-rolltemplate-turnOrder">
+		<div class="wrapper">
+
+
+			<div class="rollHeader">DEX Rank</div>
+			<div style="text-align:center">
+				<img class="botDivider" src="https://raw.githubusercontent.com/Lockbox313/imagedump/master/Elric/stormbringerDivderTest2.png">
+			</div>
+			<div class="rollBody">
+				<div class="rollResult">
+					<span>{{weapon}} {{rank}}</span>
+				</div>
+			</div>
+		</div>
+	</rolltemplate>
+
 	<rolltemplate class="sheet-rolltemplate-initiativeTurnOrder">
 		<div class="wrapper">
 
@@ -2133,6 +2149,27 @@
 			});
 		});			
 	});
+
+	<!-- Pay MP cost of spell  -->	
+	on("clicked:repeating_spells:paymp", function(eventInfo) {
+		// Lessons learned: 
+		//    - no Capital letters in attribute names
+		//    - `repeating_spells_${rowid}_mpcost` == "repeating_spells" + ${rowid} + "mpcost"
+		//    -    notice the *backwards* apostrophes in the line above: ` vs '
+		const rowid = eventInfo.sourceAttribute.split('_')[2];
+			
+		getAttrs(["curmp", `repeating_spells_${rowid}_mpcost`], function(v) {
+			var curmpCount = parseInt(v.curmp)||0;
+			var mpSpent = parseInt(v[`repeating_spells_${rowid}_mpcost`])||0;
+			var newMp = curmpCount - mpSpent;
+				
+			console.log("curmp: " + curmpCount + " spent: " + mpSpent + " new: " + newMp);
+			setAttrs({
+				"curmp": newMp
+			});
+		});
+	});
+
 
 	<!-- Divine Intervention  -->
 	on("clicked:divineintervention", function() {
